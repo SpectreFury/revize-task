@@ -1,16 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --yellow: hsl(45, 99%, 64%);
+  --blue: hsl(196, 78%, 56%);
+  --pink: hsl(328, 68%, 53%);
 }
 
 *,
@@ -22,6 +20,7 @@
 }
 
 body {
+  font-family: "Poppins", sans-serif;
   width: 100%;
   height: 100vh;
   background-color: hsl(360, 50%, 80%);
@@ -49,7 +48,7 @@ ul {
 }
 
 .image-container {
-  max-width: 40rem;
+  max-width: 30rem;
 }
 
 .text-container {
@@ -82,13 +81,13 @@ ul {
 }
 
 .btn-blue {
-  background-color: hsl(220, 90%, 60%);
+  background-color: var(--blue);
 }
 .btn-pink {
-  background-color: hsl(330, 90%, 70%);
+  background-color: var(--pink);
 }
 .btn-yellow {
-  background-color: hsl(50, 95%, 60%);
+  background-color: var(--yellow);
 }
 
 .subheading {
@@ -116,19 +115,15 @@ label {
 }
 
 .file-label {
-  display: inline-block;
+  display: flex;
+  gap: 5rem;
+  align-items: center;
+  text-transform: uppercase;
   padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
   color: #fff;
-  border-radius: 8px;
+  background-color: var(--yellow);
   border: 1px solid transparent;
+  border-radius: 5px;
   cursor: pointer;
   transition: border-color 0.25s, background 0.25s;
-}
-.file-label:hover {
-  border-color: #646cff;
-  background: #2323a1;
 }
