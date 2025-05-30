@@ -9,6 +9,10 @@
   --yellow: hsl(45, 99%, 64%);
   --blue: hsl(196, 78%, 56%);
   --pink: hsl(328, 68%, 53%);
+
+  --blue-bg: hsl(196, 78%, 96%);
+  --pink-bg: hsl(328, 68%, 96%);
+  --yellow-bg: hsl(45, 99%, 96%);
 }
 
 *,
@@ -23,7 +27,7 @@ body {
   font-family: "Poppins", sans-serif;
   width: 100%;
   height: 100vh;
-  background-color: hsl(360, 50%, 80%);
+  background-color: var(--blue-bg);
   color: black;
 }
 
