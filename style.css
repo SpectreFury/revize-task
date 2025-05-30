@@ -164,6 +164,28 @@ label {
   color: gray;
 }
 
+.edit-placement-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5em 1.2em;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #fff;
+  color: #222;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.edit-placement-btn.active {
+  background: #646cff;
+  color: #fff;
+  border-color: #646cff;
+}
+
 @keyframes rotate {
   0% {
     transform: rotate(0deg);

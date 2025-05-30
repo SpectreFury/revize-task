@@ -13,6 +13,7 @@ const umbrellaMap: Record<string, string> = {
 let selectedColor = "rgb(55, 184, 230)";
 let selectedButton = "btn-blue";
 let umbrellaTimeout: ReturnType<typeof setTimeout> | null = null;
+let isEditingPlacement = false;
 
 const colorButtons =
   document.querySelectorAll<HTMLButtonElement>(".btn-picker");
@@ -27,6 +28,9 @@ const loaderImg = document.querySelector<HTMLImageElement>(".loader-icon");
 const loaderContainer =
   document.querySelector<HTMLDivElement>(".loader-container");
 const loaderPath = document.getElementById("loader-path");
+const editPlacementBtn = document.querySelector<HTMLButtonElement>(
+  ".edit-placement-btn"
+);
 
 colorButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -123,4 +127,59 @@ function setUmbrellaColor(button: HTMLButtonElement) {
     }
     umbrellaTimeout = null;
   }, 1000);
+}
+
+if (editPlacementBtn && logoImg && umbrellaImg) {
+  editPlacementBtn.addEventListener("click", () => {
+    isEditingPlacement = !isEditingPlacement;
+    editPlacementBtn.classList.toggle("active", isEditingPlacement);
+    if (isEditingPlacement) {
+      editPlacementBtn.textContent = "Done";
+      logoImg.style.cursor = "move";
+      logoImg.draggable = false;
+    } else {
+      editPlacementBtn.textContent = "Edit Logo Placement";
+      logoImg.style.cursor = "";
+    }
+  });
+
+  let startX = 0,
+    startY = 0,
+    origLeft = 0,
+    origTop = 0;
+
+  logoImg.addEventListener("mousedown", (e) => {
+    if (!isEditingPlacement || !umbrellaImg || !logoImg) return;
+    e.preventDefault();
+    startX = e.clientX;
+    startY = e.clientY;
+    const rect = logoImg.getBoundingClientRect();
+    const parentRect = umbrellaImg.getBoundingClientRect();
+    origLeft = rect.left - parentRect.left;
+    origTop = rect.top - parentRect.top;
+    document.body.style.userSelect = "none";
+
+    function onMouseMove(ev: MouseEvent) {
+      if (!isEditingPlacement || !umbrellaImg || !logoImg) return;
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
+      let newLeft = origLeft + dx;
+      let newTop = origTop + dy;
+      // Clamp within umbrella image
+      const maxLeft = umbrellaImg.offsetWidth - logoImg.offsetWidth / 2;
+      const maxTop = umbrellaImg.offsetHeight - logoImg.offsetHeight / 2;
+      newLeft = Math.max(0, Math.min(newLeft, maxLeft));
+      newTop = Math.max(0, Math.min(newTop, maxTop));
+      logoImg.style.left = `${(newLeft / umbrellaImg.offsetWidth) * 100}%`;
+      logoImg.style.top = `${(newTop / umbrellaImg.offsetHeight) * 100}%`;
+      logoImg.style.transform = "translate(-50%, -50%)";
+    }
+    function onMouseUp() {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+      document.body.style.userSelect = "";
+    }
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+  });
 }
