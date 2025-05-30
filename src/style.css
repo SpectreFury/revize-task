@@ -52,6 +52,7 @@ ul {
 }
 
 .image-container {
+  position: relative;
   max-width: 30rem;
 }
 
@@ -68,6 +69,14 @@ ul {
 
 .umbrella-image {
   width: 100%;
+}
+
+.logo-icon {
+  position: absolute;
+  width: 25%;
+  bottom: 2%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .button-list {
@@ -130,4 +139,19 @@ label {
   border-radius: 5px;
   cursor: pointer;
   transition: border-color 0.25s, background 0.25s;
+}
+
+.loader-icon {
+  display: none;
+  animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

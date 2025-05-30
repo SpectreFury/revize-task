@@ -1,8 +1,5 @@
 import "./style.css";
 
-let selectedColor = "";
-let selectedTheme = "";
-
 const colorMap: Record<string, string> = {
   "rgb(55, 184, 230)": "var(--blue-bg)",
   "rgb(217, 54, 141)": "var(--pink-bg)",
@@ -20,6 +17,13 @@ const colorButtons =
 const uploadButton = document.querySelector<HTMLDivElement>(".file-label");
 const body = document.querySelector<HTMLBodyElement>("body");
 const umbrellaImg = document.querySelector<HTMLImageElement>(".umbrella-image");
+const logoImg = document.querySelector<HTMLImageElement>(".logo-icon");
+
+const input = document.getElementById("file-input") as HTMLInputElement;
+const inputText = document.querySelector<HTMLSpanElement>(".input-text");
+
+const uploadImg = document.querySelector<HTMLImageElement>(".upload-icon");
+const loaderImg = document.querySelector<HTMLImageElement>(".loader-icon");
 
 colorButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -28,6 +32,24 @@ colorButtons.forEach((button) => {
 
     setUmbrellaColor(button);
   });
+});
+
+input.addEventListener("change", () => {
+  const file = input.files?.[0];
+  if (!file || !inputText) return;
+
+  // Simulate a loading state
+
+  loaderImg?.style.setProperty("display", "inline-block");
+  uploadImg?.style.setProperty("display", "none");
+
+  setTimeout(() => {
+    inputText.textContent = file.name;
+    logoImg?.setAttribute("src", "Revize.avif");
+
+    loaderImg?.style.setProperty("display", "none");
+    uploadImg?.style.setProperty("display", "inline-block");
+  }, 1000);
 });
 
 function setButtonColor(button: HTMLButtonElement) {
