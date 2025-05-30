@@ -107,6 +107,16 @@ ul {
   background-color: var(--yellow);
 }
 
+.btn-picker.selected.btn-blue {
+  box-shadow: 0 0 0 4px rgba(55, 184, 230, 0.18);
+}
+.btn-picker.selected.btn-pink {
+  box-shadow: 0 0 0 4px rgba(217, 54, 141, 0.18);
+}
+.btn-picker.selected.btn-yellow {
+  box-shadow: 0 0 0 4px rgba(254, 209, 72, 0.18);
+}
+
 .subheading {
   margin-top: 1rem;
   font-size: 1.2rem;
@@ -157,7 +167,7 @@ label {
 }
 
 .loader-container > svg {
-  animation: rotate 1.5s linear infinite;
+  animation: rotate 2s linear infinite;
 }
 
 .input-desc {
@@ -189,8 +199,24 @@ label {
 @keyframes rotate {
   0% {
     transform: rotate(0deg);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
-
+  40% {
+    transform: rotate(144deg);
+    animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  }
+  50% {
+    transform: rotate(180deg);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  60% {
+    transform: rotate(180deg);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+  70% {
+    transform: rotate(216deg);
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
   100% {
     transform: rotate(360deg);
   }

@@ -35,6 +35,10 @@ const editPlacementBtn = document.querySelector<HTMLButtonElement>(
 colorButtons.forEach((button) => {
   button.addEventListener("click", () => {
     if (selectedButton === button.classList[1]) return;
+    // Remove selected class from all buttons
+    colorButtons.forEach((btn) => btn.classList.remove("selected"));
+    // Add selected class to the clicked button
+    button.classList.add("selected");
     selectedButton = button.classList[1];
 
     setButtonColor(button);
@@ -161,15 +165,18 @@ if (editPlacementBtn && logoImg && umbrellaImg) {
 
     function onMouseMove(ev: MouseEvent) {
       if (!isEditingPlacement || !umbrellaImg || !logoImg) return;
+
       const dx = ev.clientX - startX;
       const dy = ev.clientY - startY;
+
       let newLeft = origLeft + dx;
       let newTop = origTop + dy;
-      // Clamp within umbrella image
       const maxLeft = umbrellaImg.offsetWidth - logoImg.offsetWidth / 2;
       const maxTop = umbrellaImg.offsetHeight - logoImg.offsetHeight / 2;
+
       newLeft = Math.max(0, Math.min(newLeft, maxLeft));
       newTop = Math.max(0, Math.min(newTop, maxTop));
+
       logoImg.style.left = `${(newLeft / umbrellaImg.offsetWidth) * 100}%`;
       logoImg.style.top = `${(newTop / umbrellaImg.offsetHeight) * 100}%`;
       logoImg.style.transform = "translate(-50%, -50%)";
