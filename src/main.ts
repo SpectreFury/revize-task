@@ -10,6 +10,10 @@ const umbrellaMap: Record<string, string> = {
   "rgb(254, 209, 72)": "yellow-umbrella.png",
 };
 
+let selectedColor = "rgb(55, 184, 230)";
+let selectedButton = "btn-blue";
+let umbrellaTimeout: ReturnType<typeof setTimeout> | null = null;
+
 const colorButtons =
   document.querySelectorAll<HTMLButtonElement>(".btn-picker");
 const uploadButton = document.querySelector<HTMLDivElement>(".file-label");
@@ -26,6 +30,9 @@ const loaderPath = document.getElementById("loader-path");
 
 colorButtons.forEach((button) => {
   button.addEventListener("click", () => {
+    if (selectedButton === button.classList[1]) return;
+    selectedButton = button.classList[1];
+
     setButtonColor(button);
     setBackgroundColor(button);
 
@@ -51,7 +58,7 @@ input.addEventListener("change", () => {
 
     umbrellaImg?.style.setProperty("display", "none");
     loaderContainer?.style.setProperty("display", "flex");
-    loaderPath?.setAttribute("fill", "rgb(55, 184, 230)");
+    loaderPath?.setAttribute("fill", selectedColor);
     logoImg?.setAttribute("src", "");
 
     setTimeout(() => {
@@ -76,6 +83,8 @@ input.addEventListener("change", () => {
 function setButtonColor(button: HTMLButtonElement) {
   const backgroundColor = getComputedStyle(button).backgroundColor;
   uploadButton?.style.setProperty("background-color", backgroundColor);
+
+  selectedColor = backgroundColor;
 }
 
 function setBackgroundColor(button: HTMLButtonElement) {
@@ -88,10 +97,31 @@ function setBackgroundColor(button: HTMLButtonElement) {
 }
 
 function setUmbrellaColor(button: HTMLButtonElement) {
-  const backgroundColor = getComputedStyle(button).backgroundColor;
-  const mappedColor = umbrellaMap[backgroundColor];
-
-  if (mappedColor) {
-    umbrellaImg?.setAttribute("src", mappedColor);
+  if (umbrellaTimeout) {
+    clearTimeout(umbrellaTimeout);
+    umbrellaTimeout = null;
   }
+
+  // Show loader and hide umbrella
+  umbrellaImg?.style.setProperty("display", "none");
+  loaderPath?.setAttribute("fill", selectedColor);
+  loaderContainer?.style.setProperty("display", "flex");
+  logoImg?.style.setProperty("display", "none");
+
+  umbrellaTimeout = setTimeout(() => {
+    // Hide loader
+    loaderContainer?.style.setProperty("display", "none");
+    logoImg?.style.setProperty("display", "inline-block");
+
+    // Show umbrella with the selected color
+    umbrellaImg?.style.setProperty("display", "flex");
+
+    const backgroundColor = getComputedStyle(button).backgroundColor;
+    const mappedColor = umbrellaMap[backgroundColor];
+
+    if (mappedColor) {
+      umbrellaImg?.setAttribute("src", mappedColor);
+    }
+    umbrellaTimeout = null;
+  }, 1000);
 }

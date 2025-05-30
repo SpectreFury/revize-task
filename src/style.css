@@ -158,6 +158,10 @@ label {
   animation: rotate 1.5s linear infinite;
 }
 
+.hide {
+  display: none;
+}
+
 @keyframes rotate {
   0% {
     transform: rotate(0deg);
