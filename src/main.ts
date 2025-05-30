@@ -35,7 +35,6 @@ colorButtons.forEach((button) => {
 
     setButtonColor(button);
     setBackgroundColor(button);
-
     setUmbrellaColor(button);
   });
 });
